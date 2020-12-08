@@ -3,10 +3,10 @@
 * [1. General](#1-general)
 * [2. Change events](#2-change-events)
 * [3. Config provider factory](#3-config-provider-factory)
-  * [3.1. Basic](#3-1-basic)
-  * [3.2. Raw and public](#3-2-raw-and-public)
-  * [3.3. Composite](#3-3-composite)
-  * [3.4. Scattered](#3-4-scattered)
+  * [3.1. Basic](#31-basic)
+  * [3.2. Raw and public](#32-raw-and-public)
+  * [3.3. Composite](#33-composite)
+  * [3.4. Scattered](#34-scattered)
 
 ## 1. General
 
