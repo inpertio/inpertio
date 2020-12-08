@@ -22,6 +22,7 @@
     * [6.2.1. Port](#621-port)
     * [6.2.2. Certificate](#622-certificate)
   * [6.3. Encryption](#63-encryption)
+  * [6.4. Logger](#64-logger)
 * [7. Health check](#7-health-check)
 * [8. Extension](#8-extension)
   * [8.1. Access control](#81-access-control)
@@ -259,6 +260,10 @@ TBD
 TBD
 
 ### 6.3. Encryption
+
+TBD
+
+### 6.4. Logger
 
 TBD
 
