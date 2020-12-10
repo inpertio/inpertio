@@ -23,6 +23,7 @@
     * [6.2.2. Certificate](#622-certificate)
   * [6.3. Encryption](#63-encryption)
   * [6.4. Logger](#64-logger)
+  * [6.5. Auto refresh](#65-auto-refresh)
 * [7. Health check](#7-health-check)
 * [8. Extension](#8-extension)
   * [8.1. Access control](#81-access-control)
@@ -38,7 +39,9 @@ It can be used from any programming language, however a [number of built-in clie
 
 ## 2. Availability
 
-As soon as the Config Service starts and successfully clones target Git repo, it guarantees that repo content is exposed for programmatic consumption all the time. Later on new commits might be added to the Git repo and connectivity between the repo and the Config Service might break, that way the latest updates are not exposed. However, the problems are reported and last known repo state is still available
+As soon as the Config Service starts and successfully clones target Git repo, it guarantees that repo content is exposed for programmatic consumption all the time. Later on new commits might be added to the Git repo and connectivity between the repo and the Config Service might break, that way the latest updates are not exposed. However, the problems are reported and last known repo state is still available.
+
+Feel free to check [5.2. Refresh](#52-refresh) for information on how the config service gets config repo changes 
 
 ## 3. Scalability
 
@@ -211,6 +214,8 @@ As [depicted above](#1-overview), the Config Service exposes Git configs repo co
 PUT http(s)://<host>:<port>/api/refresh
 ```
 
+Also automatic refreshes can be configured, please check [6.5. Auto refresh](#65-auto-refresh) for more details on that
+
 ## 5. UI
 
 The config service provides a couple of web UI pages which facilitate common actions.
@@ -264,6 +269,10 @@ TBD
 TBD
 
 ### 6.4. Logger
+
+TBD
+
+### 6.5. Auto refresh
 
 TBD
 
