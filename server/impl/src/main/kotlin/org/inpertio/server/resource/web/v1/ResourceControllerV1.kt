@@ -2,6 +2,8 @@ package org.inpertio.server.resource.web.v1
 
 import org.inpertio.server.resource.service.ResourceService
 import org.slf4j.Logger
+import org.springframework.core.io.InputStreamResource
+import org.springframework.core.io.InputStreamSource
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.util.AntPathMatcher
@@ -22,7 +24,7 @@ class ResourceControllerV1(
     fun getResource(
         @PathVariable branch: String,
         request: HttpServletRequest
-    ): ResponseEntity<ByteArray> {
+    ): ResponseEntity<InputStreamSource> {
         val requestPath = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString()
         val controllerPath = request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString()
         val resourcePath = ANT_MATCHER.extractPathWithinPattern(controllerPath, requestPath)
@@ -32,9 +34,9 @@ class ResourceControllerV1(
                          branch, resourcePath, resourcePath)
         }
         return if (result.success) {
-            ResponseEntity.ok(result.successValue)
+            ResponseEntity.ok(InputStreamResource(result.successValue))
         } else {
-            ResponseEntity(result.failureValue.toByteArray(), HttpStatus.BAD_REQUEST)
+            ResponseEntity(InputStreamResource(result.failureValue.toByteArray().inputStream()), HttpStatus.BAD_REQUEST)
         }
     }
 
