@@ -9,7 +9,7 @@
 
     <logger level="${INPERTIO_LOGGER_LEVEL:-INFO}" name="org.inpertio"/>
 
-    <root level="${ROOT_LOGGER_LEVEL:-WARN}">
+    <root level="${ROOT_LOGGER_LEVEL:-INFO}">
         <appender-ref ref="STDOUT"/>
     </root>
 

@@ -1,6 +1,6 @@
 package org.inpertio.server.resource.service.impl
 
-import org.inpertio.server.git.GitService
+import org.inpertio.server.git.service.GitService
 import org.inpertio.server.resource.service.ResourceService
 import org.inpertio.server.util.ProcessingResult
 import org.springframework.stereotype.Component
@@ -13,7 +13,7 @@ class ResourceServiceImpl(
 ) : ResourceService {
 
     override fun getResource(branch: String, resourcePath: String): ProcessingResult<InputStream, String> {
-        return gitService.withBranch(branch) { rootDir ->
+        return gitService.withBranch(branch) { _, rootDir ->
             val resource = File(rootDir, resourcePath)
             if (resource.isFile) {
                 ProcessingResult.success(resource.inputStream())
