@@ -1,4 +1,4 @@
-package org.inpertio.server.git
+package org.inpertio.server.git.service
 
 import java.io.File
 
@@ -9,5 +9,10 @@ interface GitService {
      *
      * @return  given action's call result if target branch is found; `null` if no branch is found
      */
-    fun <T> withBranch(branch: String, action: (File) -> T): T?
+    fun <T> withBranch(branch: String, action: Action<T>): T?
+
+    fun interface Action<T> {
+
+        fun doInBranch(hash: String, rootDir: File): T
+    }
 }
