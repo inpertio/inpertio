@@ -12,7 +12,7 @@ import org.junit.runner.RunWith
             "json:build/reports/cucumber.json",
             "junit:build/reports/cucumber.xml"
         ],
-        features = ["classpath: features"],
+        features = ["classpath:features"],
         glue = ["org.inpertio.cucumber.glue"]
 )
 class CucumberRunner
