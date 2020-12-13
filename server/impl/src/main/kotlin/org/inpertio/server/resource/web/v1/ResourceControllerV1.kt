@@ -1,6 +1,7 @@
 package org.inpertio.server.resource.web.v1
 
 import org.inpertio.server.resource.service.ResourceService
+import org.inpertio.server.util.WebUtil
 import org.slf4j.Logger
 import org.springframework.core.io.InputStreamResource
 import org.springframework.core.io.InputStreamSource
@@ -10,7 +11,6 @@ import org.springframework.util.AntPathMatcher
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.servlet.HandlerMapping
 import javax.servlet.http.HttpServletRequest
 
 @RestController
@@ -21,13 +21,8 @@ class ResourceControllerV1(
 ) {
 
     @RequestMapping("/{branch}/**")
-    fun getResource(
-        @PathVariable branch: String,
-        request: HttpServletRequest
-    ): ResponseEntity<InputStreamSource> {
-        val requestPath = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString()
-        val controllerPath = request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString()
-        val resourcePath = ANT_MATCHER.extractPathWithinPattern(controllerPath, requestPath)
+    fun getResource(@PathVariable branch: String, request: HttpServletRequest): ResponseEntity<InputStreamSource> {
+        val resourcePath = WebUtil.getTrailingPath(request)
         val result = service.getResource(branch, resourcePath)
         if (logger.isDebugEnabled) {
             logger.debug("Got the following result on attempt to get resource '{}' in branch '{}': {}",
