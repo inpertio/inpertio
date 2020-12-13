@@ -1,4 +1,4 @@
-Feature: Resources processing
+Feature: Resources processing v.1
 
   Scenario: Available resource
 
