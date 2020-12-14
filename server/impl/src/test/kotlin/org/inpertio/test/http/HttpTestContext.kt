@@ -10,23 +10,23 @@ class HttpTestContext : TestAware {
 
     private val responses = ConcurrentHashMap<HttpMethod, List<ResponseEntry>>()
 
-    fun onResponse(url: String, method: HttpMethod, data: ByteArray) {
+    fun onResponse(url: String, method: HttpMethod, data: ByteArray?, code: Int) {
         responses.compute(method) { _, entries ->
             if (entries == null) {
-                listOf(ResponseEntry(url, data))
+                listOf(ResponseEntry(url, data, code))
             } else {
-                entries + ResponseEntry(url, data)
+                entries + ResponseEntry(url, data, code)
             }
         }
     }
 
-    fun getLastResponse(method: HttpMethod): ByteArray? {
-        return responses[method]?.last()?.response
+    fun getLastResponse(method: HttpMethod): ResponseEntry? {
+        return responses[method]?.last()
     }
 
     override fun onTestEnd() {
         responses.clear()
     }
 
-    private class ResponseEntry(val url: String, val response: ByteArray)
+    class ResponseEntry(val url: String, val response: ByteArray?, val code: Int)
 }

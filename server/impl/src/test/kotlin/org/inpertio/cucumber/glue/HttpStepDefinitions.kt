@@ -23,16 +23,29 @@ class HttpStepDefinitions {
         val connection = (URL(url).openConnection() as HttpURLConnection).apply {
             requestMethod = "GET"
         }
-        val response = connection.inputStream.readBytes()
+        val code = connection.responseCode
+        val response = try {
+            connection.inputStream.readBytes()
+        } catch (e: Exception) {
+            null
+        }
         connection.disconnect()
 
-        context.onResponse(url, HttpMethod.GET, response)
+        context.onResponse(url, HttpMethod.GET, response, code)
     }
 
     @Then("^the last ([^\\s]+) request returns the following:$")
-    fun verifyLastSuccessfulResponse(rawMethod: String, expected: String) {
+    fun verifyLastResponseContent(rawMethod: String, expectedContent: String) {
         val method = HttpMethod.valueOf(rawMethod)
         val actual = context.getLastResponse(method) ?: fail("No $method response is found")
-        assertThat(String(actual)).isEqualTo(expected)
+        val content = actual.response ?: fail("Last $rawMethod request to ${actual.url} has no response")
+        assertThat(String(content)).isEqualTo(expectedContent)
+    }
+
+    @Then("^the last ([^\\s]+) request has code (\\d+)$")
+    fun verifyLastResponseCode(rawMethod: String, expectedCode: Int) {
+        val method = HttpMethod.valueOf(rawMethod)
+        val actual = context.getLastResponse(method) ?: fail("No $method response is found")
+        assertThat(expectedCode).isEqualTo(actual.code)
     }
 }
