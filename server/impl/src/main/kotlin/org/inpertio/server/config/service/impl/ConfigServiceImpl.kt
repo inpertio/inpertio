@@ -49,28 +49,8 @@ class ConfigServiceImpl(
     private fun <T> getConfigs(inputFiles: List<File>, format: ConfigFormat<T>): T {
         val configFiles = LinkedHashSet<File>()
         for (file in inputFiles) {
-            addFiles(configFiles, file)
+            file.walkTopDown().filter(File::isFile).forEach(configFiles::add)
         }
         return format.format(configFiles.toList())
-    }
-
-    private fun addFiles(holder: MutableCollection<File>, entry: File) {
-        if (entry.isFile) {
-            holder += entry
-            return
-        }
-
-        val toProcess = Stack<File>()
-        toProcess += entry
-        while (!toProcess.isEmpty()) {
-            val dir = toProcess.pop()
-            dir.listFiles()?.forEach {
-                if (it.isFile) {
-                    holder += it
-                } else {
-                    toProcess += it
-                }
-            }
-        }
     }
 }
